@@ -1,4 +1,4 @@
-function[db, out_img] = compute2DProperties(gray_img, labeled_img)
+function[db, out_img] = compute2DProperties(orig_img, labeled_img)
     num_objects = max(max(labeled_img)); % calc # objects in image
     db = zeros(6, num_objects); % init database to 0s
     areas = zeros(num_objects, 1); % store calculated object areas
@@ -76,31 +76,31 @@ function[db, out_img] = compute2DProperties(gray_img, labeled_img)
         db(6, i) = db(6, i) + (db(4, i) / e_maxs(i));
     end
     
-    %%%%% draw line
-    fh1 = figure();
-    imshow(gray_img);
+    fh1 = figure(); % create figure to draw on image
+    imshow(orig_img);
     hold on;
 
-    x2=db(3,1)+(20*cos(db(5,1)));
-    y2=db(2,1)+(20*sin(db(5,1)));
-    plot([db(3,1) x2],[db(2,1) y2])
-    %%%%% draw line
+    for i = 1 : size(db, 2) % draw yellow lines along object orientations
+        x_cent = db(3, i);
+        y_cent = db(2, i);
+        obj_orient = db(5, i);
+        x2 = x_cent + (50 * cos(obj_orient));
+        y2 = y_cent + (50 * sin(obj_orient));
+        
+        x3 = x_cent + (50 * cos(obj_orient + pi));
+        y3 = y_cent + (50 * sin(obj_orient + pi));
+        plot([x3 x2], [y3 y2], 'y', 'LineWidth', 2); % plot line
+    end
+    
+    for i = 1 : size(db, 2) % draw red dots on centers of objects
+        plot(db(3, i), db(2, i), 'r.', 'MarkerSize', 20);
+    end
    
     for i = 1 : size(db, 2) % convert orientations to degrees from radians
         db(5, i) = db(5, i) * 180 / pi;
     end
-    
-
-
-    for i = 1 : size(db, 2)
-        plot(db(3, i), db(2, i), 'r.', 'MarkerSize', 20);
-    end
-
-    % annotated_img = saveAnnotatedImg(fh1);
-
-    % fh3 = figure; imshow(annotated_img);
-    
-    
+ 
+    out_img = saveAnnotatedImg(fh1);
 
 end
 
