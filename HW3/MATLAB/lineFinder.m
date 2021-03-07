@@ -31,7 +31,7 @@ for i = 1 : size(thetas, 2)
     b = rho / cos(theta);
     x = 1:size(orig_img, 2);
     y = m*x + b;
-    line(x, y);
+    line(x, y, 'Color', 'green');
 end
 
 end

@@ -8,7 +8,7 @@ accumulator = zeros(rho_num_bins, theta_num_bins);
 
 for y = 1 : size(img, 1) % rows
     for x = 1 : size(img, 2) % columns
-        if img(y, x) > 0 % edge pixel
+        if img(y, x) == 255 % edge pixel
             for k = 1 : size(accumulator, 2) % loop through thetas
                 theta = theta_step_size * k;
                 rho = y * cos(theta) - x * sin(theta); % calc ro
