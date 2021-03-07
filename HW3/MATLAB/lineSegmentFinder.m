@@ -9,7 +9,7 @@ theta_indexes = [];
 rho_indexes = [];
 
 % recreate edge image
-canny_thresh = 0.25;
+canny_thresh = 0.21;
 edge_img = edge(orig_img, 'canny', canny_thresh);
 
 for y = 1 : size(hough_img, 1) % rows
@@ -68,9 +68,35 @@ hold on;
 
 % plot lines connecting the saved endpoints
 for i = 1 : size(min_y, 2)
-    plot([min_x(i) max_x(i)], [min_y(i) max_y(i)], 'g');
+    plot([min_x(i) max_x(i)], [min_y(i) max_y(i)], 'g', 'LineWidth', 2);
+end
+
+cropped_line_img = saveAnnotatedImg(fh1);
+
 end
 
 
+% copied from demoMATLABTricksFun.m
+function annotated_img = saveAnnotatedImg(fh)
+figure(fh); % Shift the focus back to the figure fh
 
+% The figure needs to be undocked
+set(fh, 'WindowStyle', 'normal');
+
+% The following two lines just to make the figure true size to the
+% displayed image. The reason will become clear later.
+img = getimage(fh);
+truesize(fh, [size(img, 1), size(img, 2)]);
+
+% getframe does a screen capture of the figure window, as a result, the
+% displayed figure has to be in true size. 
+frame = getframe(fh);
+frame = getframe(fh);
+pause(0.5); 
+% Because getframe tries to perform a screen capture. it somehow 
+% has some platform depend issues. we should calling
+% getframe twice in a row and adding a pause afterwards make getframe work
+% as expected. This is just a walkaround. 
+annotated_img = frame.cdata;
 end
+

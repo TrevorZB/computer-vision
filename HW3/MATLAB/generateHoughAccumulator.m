@@ -13,12 +13,13 @@ for y = 1 : size(img, 1) % rows
                 theta = theta_step_size * k;
                 rho = y * cos(theta) - x * sin(theta); % calc ro
                 rho_index = ceil((rho - min_rho) / rho_per_bin);
-                if rho_index < 1
+                if rho_index < 1 % out of bounds checks
                     rho_index = 1;
                 end
                 if rho_index > size(accumulator, 1) - 1
                     rho_index = size(accumulator, 1) - 1;
                 end
+                % vote for this bin
                 accumulator(rho_index, k) = accumulator(rho_index, k) + 1;
             end 
         end

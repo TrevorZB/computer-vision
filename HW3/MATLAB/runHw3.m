@@ -47,10 +47,9 @@ hw3_walkthrough1;
 %%
 function challenge1a()
 img_list = {'hough_1', 'hough_2', 'hough_3'};
-thresholds = {0.21, 0.21, 0.21};
 for i = 1:length(img_list)
     img = imread([img_list{i} '.png']);
-    edge_img = edge(img, 'canny', thresholds{i});
+    edge_img = edge(img, 'canny', 0.21);
     
         
     % Note: The output from edge is an image of logical type.
@@ -62,12 +61,12 @@ end
 function challenge1b()
 img_list = {'hough_1', 'hough_2', 'hough_3'};
 
-% rho_num_bins = ??;
-% theta_num_bins = ??;
+rho_num_bins = [750, 800, 800];
+theta_num_bins =[180, 130, 120];
 for i = 1:length(img_list)
     img = imread(['edge_' img_list{i} '.png']);
     hough_accumulator = generateHoughAccumulator(img,...
-        theta_num_bins, rho_num_bins);
+        theta_num_bins(i), rho_num_bins(i));
     
     % We'd like to save the hough accumulator array as an image to
     % visualize it. The values should be between 0 and 255 and the
@@ -79,7 +78,7 @@ end
 function challenge1c()
 
 img_list = {'hough_1', 'hough_2', 'hough_3'};
-%hough_threshold = [?? ?? ??];
+hough_threshold = [115, 95, 153];
 
 for i = 1:length(img_list)
     orig_img = imread([img_list{i} '.png']);
@@ -99,7 +98,7 @@ end
 function challenge1d()
 
 img_list = {'hough_1', 'hough_2', 'hough_3'};
-%hough_threshold = [?? ?? ??];
+hough_threshold = [115, 95, 153];
 
 for i = 1:length(img_list)
     orig_img = imread([img_list{i} '.png']);
