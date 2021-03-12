@@ -76,7 +76,7 @@ dest_pts_nx2 = applyHomography(H_3x3, test_pts_nx2);
 % Verify homography 
 result_img = showCorrespondence(orig_img, warped_img, test_pts_nx2, dest_pts_nx2);
 
-%imwrite(result_img, 'homography_result.png');
+imwrite(result_img, 'homography_result.png');
 
 %%
 function challenge1b()
@@ -86,8 +86,8 @@ bg_img = im2double(imread('Osaka.png')); %imshow(bg_img);
 portrait_img = im2double(imread('portrait_small.png')); %imshow(portrait_img);
 
 % Estimate homography
-% portrait_pts = [xp1 yp1; xp2 yp2; xp3 yp3; xp4 yp4];
-% bg_pts = [xb1 yb1; xb2 yb2; xb3 yb3; xb4 yb4];
+portrait_pts = [19 22; 306 21; 18 382; 308 380];
+bg_pts = [114 38; 264 82; 268 408; 103 421];
 
 H_3x3 = computeHomography(portrait_pts, bg_pts);
 
