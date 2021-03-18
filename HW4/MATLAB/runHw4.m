@@ -135,11 +135,11 @@ function challenge1d()
 [horse, horse_map, horse_mask] = imread('escher_horsemen.png');
 blended_result = blendImagePair(fish, fish_mask, horse, horse_mask,...
     'blend');
-%figure, imshow(blended_result);
+% figure, imshow(blended_result);
 imwrite(blended_result, 'blended_result.png');
 
 overlay_result = blendImagePair(fish, fish_mask, horse, horse_mask, 'overlay');
-%figure, imshow(overlay_result);
+% figure, imshow(overlay_result);
 imwrite(overlay_result, 'overlay_result.png');
 
 %%
