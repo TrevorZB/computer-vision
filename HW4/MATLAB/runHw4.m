@@ -48,8 +48,9 @@ orig_img = imread('portrait.png');
 warped_img = imread('portrait_transformed.png');
 
 % Choose 4 corresponding points (use ginput)
-src_pts_nx2  = [180 122; 414 314; 386 571; 235 644];
-dest_pts_nx2 = [152 161; 335 280; 305 530; 168 563];
+src_pts_nx2 = [299 122; 384 571; 514 316; 622 504];
+dest_pts_nx2 = [238 133; 305 527; 450 280; 617 503];
+
 
 H_3x3 = computeHomography(src_pts_nx2, dest_pts_nx2);
 % src_pts_nx2 and dest_pts_nx2 are the coordinates of corresponding points 
@@ -66,7 +67,7 @@ H_3x3 = computeHomography(src_pts_nx2, dest_pts_nx2);
 % first column contains the x coordinates and the second column contains
 % the y coordinates.
 
-test_pts_nx2 = [432 216; 499 344; 359 363; 334 446];
+test_pts_nx2 = [386 455; 345 315; 493 212; 528 648];
 
 % Apply homography
 dest_pts_nx2 = applyHomography(H_3x3, test_pts_nx2);
@@ -86,8 +87,8 @@ bg_img = im2double(imread('Osaka.png')); %imshow(bg_img);
 portrait_img = im2double(imread('portrait_small.png')); %imshow(portrait_img);
 
 % Estimate homography
-portrait_pts = [19 22; 306 21; 18 382; 308 380];
-bg_pts = [114 38; 264 82; 268 408; 103 421];
+portrait_pts = [19 23; 306 24; 301 377; 22 379];
+bg_pts = [110 34; 262 81; 270 410; 97 424];
 
 H_3x3 = computeHomography(portrait_pts, bg_pts);
 
@@ -99,7 +100,7 @@ dest_canvas_width_height = [size(bg_img, 2), size(bg_img, 1)];
 mask = ~mask;
 % Superimpose the image
 result = bg_img .* cat(3, mask, mask, mask) + dest_img;
-%figure, imshow(result);
+figure, imshow(result);
 imwrite(result, 'Van_Gogh_in_Osaka.png');
 
 %%  
@@ -117,8 +118,8 @@ before_img = showCorrespondence(imgs, imgd, xs, xd);
 imwrite(before_img, 'before_ransac.png');
 
 % Use RANSAC to reject outliers
-%ransac_n = ??; % Max number of iteractions
-%ransac_eps = ??; Acceptable alignment error 
+ransac_n = 10; % Max number of iteractions
+ransac_eps = 5; % Acceptable alignment error 
 
 [inliers_id, H_3x3] = runRANSAC(xs, xd, ransac_n, ransac_eps);
 
