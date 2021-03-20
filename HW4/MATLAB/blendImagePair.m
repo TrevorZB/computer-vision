@@ -11,20 +11,36 @@ if strcmp(mode, 'overlay')
         end
     end
 elseif strcmp(mode, 'blend')
-    mask_d = 1 - maskd;
-    weight_d = bwdist(mask_d);
-    weight_d = weight_d ./ max(weight_d, [], 'all');
-    blend_d = uint8(double(wrapped_imgd) .* weight_d);
-    
-    mask_s = 1 - masks;
-    weight_s = bwdist(mask_s);
-    weight_s = weight_s ./ max(weight_s, [], 'all');
-    blend_s = uint8(double(wrapped_imgs) .* weight_s);
-    
-    i_blend = blend_d + blend_s;
-    i_blend = double(i_blend) ./ (weight_d + weight_s);
-    i_blend = uint8(i_blend);
-    out = i_blend;
+    if isa(wrapped_imgd(1,1,1), 'uint8')  % fish and horse
+        mask_d = 1 - maskd;
+        weight_d = bwdist(mask_d);
+        weight_d = weight_d ./ max(weight_d, [], 'all');
+        blend_d = uint8(double(wrapped_imgd) .* weight_d);
+
+        mask_s = 1 - masks;
+        weight_s = bwdist(mask_s);
+        weight_s = weight_s ./ max(weight_s, [], 'all');
+        blend_s = uint8(double(wrapped_imgs) .* weight_s);
+
+        i_blend = blend_d + blend_s;
+        i_blend = double(i_blend) ./ (weight_d + weight_s);
+        i_blend = uint8(i_blend);
+        out = i_blend;
+    else  % mountain images
+        mask_d = 1 - maskd;
+        weight_d = bwdist(mask_d);
+        weight_d = weight_d ./ max(weight_d, [], 'all');
+        blend_d = wrapped_imgd .* weight_d;
+
+        mask_s = 1 - masks;
+        weight_s = bwdist(mask_s);
+        weight_s = weight_s ./ max(weight_s, [], 'all');
+        blend_s = wrapped_imgs .* weight_s;
+
+        i_blend = blend_d + blend_s;
+        i_blend = i_blend ./ (weight_d + weight_s);
+        out = i_blend;
+    end
 end
 out_img = out;
 end
