@@ -87,8 +87,8 @@ bg_img = im2double(imread('Osaka.png')); %imshow(bg_img);
 portrait_img = im2double(imread('portrait_small.png')); %imshow(portrait_img);
 
 % Estimate homography
-portrait_pts = [19 23; 306 24; 301 377; 22 379];
-bg_pts = [110 34; 262 81; 270 410; 97 424];
+portrait_pts = [ 0 0 ; 327 0 ; 327 400 ; 0 400 ];
+bg_pts = [ 100 19 ; 275 70 ; 285 424 ; 83 439 ];
 
 H_3x3 = computeHomography(portrait_pts, bg_pts);
 
@@ -153,9 +153,20 @@ imgr = im2single(imread('mountain_right.png'));
 
 % You are free to change the order of input arguments
 stitched_img = stitchImg(imgc, imgl, imgr);
-figure, imshow(stitched_img);
+% figure, imshow(stitched_img);
 imwrite(stitched_img, 'mountain_panorama.png');
 
 %%
 function challenge1f()
 % Your own panorama
+% Test image stitching
+
+% stitch three images
+imgc = im2single(imread('IMG_02.png'));
+imgl = im2single(imread('IMG_01.png'));
+imgr = im2single(imread('IMG_03.png'));
+
+% You are free to change the order of input arguments
+stitched_img = stitchImg(imgc, imgl, imgr);
+% figure, imshow(stitched_img);
+imwrite(stitched_img, 'my_panorama.png');
