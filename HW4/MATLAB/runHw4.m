@@ -100,7 +100,7 @@ dest_canvas_width_height = [size(bg_img, 2), size(bg_img, 1)];
 mask = ~mask;
 % Superimpose the image
 result = bg_img .* cat(3, mask, mask, mask) + dest_img;
-% figure, imshow(result);
+figure, imshow(result);
 imwrite(result, 'Van_Gogh_in_Osaka.png');
 
 %%  
@@ -114,7 +114,7 @@ imgs = imread('mountain_left.png'); imgd = imread('mountain_center.png');
 % coordinates and the second column contains the y coordinates
 
 before_img = showCorrespondence(imgs, imgd, xs, xd);
-%figure, imshow(before_img);
+% figure, imshow(before_img);
 imwrite(before_img, 'before_ransac.png');
 
 % Use RANSAC to reject outliers
@@ -135,11 +135,11 @@ function challenge1d()
 [horse, horse_map, horse_mask] = imread('escher_horsemen.png');
 blended_result = blendImagePair(fish, fish_mask, horse, horse_mask,...
     'blend');
-% figure, imshow(blended_result);
+figure, imshow(blended_result);
 imwrite(blended_result, 'blended_result.png');
 
 overlay_result = blendImagePair(fish, fish_mask, horse, horse_mask, 'overlay');
-% figure, imshow(overlay_result);
+figure, imshow(overlay_result);
 imwrite(overlay_result, 'overlay_result.png');
 
 %%
@@ -153,7 +153,7 @@ imgr = im2single(imread('mountain_right.png'));
 
 % You are free to change the order of input arguments
 stitched_img = stitchImg(imgc, imgl, imgr);
-% figure, imshow(stitched_img);
+figure, imshow(stitched_img);
 imwrite(stitched_img, 'mountain_panorama.png');
 
 %%
@@ -168,5 +168,5 @@ imgr = im2single(imread('IMG_03.png'));
 
 % You are free to change the order of input arguments
 stitched_img = stitchImg(imgc, imgl, imgr);
-% figure, imshow(stitched_img);
+figure, imshow(stitched_img);
 imwrite(stitched_img, 'my_panorama.png');
