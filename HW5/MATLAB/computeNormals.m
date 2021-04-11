@@ -7,20 +7,12 @@ normals(:,:,3) = 1;
 for j = 1 : size(mask, 1)
     for i = 1 : size(mask, 2)
         if (mask(j, i) ~= 0)
-            intensities = [];
+            intensities = zeros(5, 1);
             for k = 1 : size(img_cell, 1)
                 image = cell2mat(img_cell(k));
-                intensities = [intensities image(j, i)];
+                intensities(k) = image(j, i);
             end
-            [maxi indices] = maxk(intensities, 3);
-            S = zeros(3, 3);
-            I = transpose(maxi);
-            for k = 1 : 3
-                index = indices(1, k);
-                s = light_dirs(index,:);
-                S(k,:) = s;
-            end
-            N = inv(S) * double(I);
+            N = inv(transpose(light_dirs)*light_dirs)*transpose(light_dirs)*double(intensities);
             normal = norm(N);
             n = N ./ normal;
             normals(j, i, :) = n;
