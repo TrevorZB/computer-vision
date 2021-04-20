@@ -8,16 +8,16 @@ images = dir(focal_stack_dir);
 
 for i = 1 : size(images)
     name = images(i).name;
-    if strcmp(name, '.') || strcmp(name, '..')
+    if strcmp(name, '.') || strcmp(name, '..') % filter out linux dirs
         continue;
     end
     name = strcat(focal_stack_dir, "/", name); 
     image = imread(name);
-    if first == 1
+    if first == 1 % first image, create stack
         rgb_stack = image;
         gray_stack = rgb2gray(image);
         first = 0;
-    else
+    else % all other images, cat onto the image stacks
         rgb_stack = cat(3, rgb_stack, image);
         gray_stack = cat(3, gray_stack, rgb2gray(image));
     end
